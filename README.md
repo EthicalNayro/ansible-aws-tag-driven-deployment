@@ -36,11 +36,11 @@ Instead of hardcoding static IP addresses, this project queries the AWS EC2 API 
     │ - Weekly Cron Scheduled │       │ - Weekly Cron Scheduled │
     └─────────────────────────┘       └─────────────────────────┘
 ```
-```
+
 ## 🏷️ AWS Tags Schema
 
 Configurations are driven by the following AWS Tags applied to EC2 instances:
-
+```
 | Tag Key   | Description                           | Example Value              |
 | :-------- | :───────────────────────────────────  | :───────────────────────── |
 | `Owner`   | Used by Ansible filter to scope hosts | `Oryan`                    |
