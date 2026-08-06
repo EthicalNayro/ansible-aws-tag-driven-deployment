@@ -12,17 +12,6 @@ An automated Infrastructure-as-Code (IaC) solution using **Ansible Dynamic Inven
 
 Instead of hardcoding static IP addresses, this project queries the AWS EC2 API in real-time, filters target instances by `Owner`, and applies system configurations dynamically based on instance metadata:
 
-```bash
-צודק לגמרי! בגלל שתוכן הקוד היה בתוך בלוק קוד בעצמו, חלק ממנו נחתך בתוצג.
-
-הנה הקובץ המלא בצורה נקי ושלמה. תוכל להעתיק את הכל ישירות לתוך קובץ ה-README.md:
-
-AWS EC2 Dynamic Provisioning with Ansible (Tag-Driven Deployment)
-An automated Infrastructure-as-Code (IaC) project using Ansible Dynamic Inventory (aws_ec2 plugin) to discover, configure, and manage AWS EC2 instances dynamically based on AWS Tags.
-
-📐 Architecture Overview
-Instead of maintaining static IP inventories, this project queries the AWS EC2 API in real-time, dynamically groups target instances, and configures each node based on its metadata tags.
-
                          ┌──────────────────────┐
                          │ AWS EC2 Instances    │
                          └──────────┬───────────┘
