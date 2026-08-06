@@ -1,0 +1,89 @@
+---
+- name: Configure EC2 Instances based on AWS Tags
+  hosts: all
+  gather_facts: yes
+  become: yes
+
+  vars:
+    target_owner: "Oryan"
+
+  tasks:
+    # ----------------------------------------------------
+    # 4a. Check Owner tag
+    # ----------------------------------------------------
+    - name: End play for host if Owner tag does not match
+      meta: end_host
+      when: tags.Owner is not defined or tags.Owner != target_owner
+
+    # ----------------------------------------------------
+    # 4b. Update Hostname based on Name tag
+    # ----------------------------------------------------
+    - name: Set system hostname based on Name tag
+      ansible.builtin.hostname:
+        name: "{{ tags.Name }}"
+      when: tags.Name is defined
+
+    # ----------------------------------------------------
+    # 4c + 4d. Install Service based on Tags
+    # ----------------------------------------------------
+    - name: Install configured service
+      block:
+        - name: Update APT cache
+          ansible.builtin.apt:
+            update_cache: yes
+
+        - name: Format package version string
+          ansible.builtin.set_fact:
+            package_spec: >-
+              {% if tags.Version is defined and tags.Version != '' %}
+              {{ tags.Service }}
+              {% else %}
+              {{ tags.Service }}
+              {% endif %}
+
+        - name: Install package
+          ansible.builtin.apt:
+            name: "{{ package_spec }}"
+            state: present
+          notify: Start and enable service
+
+      when: tags.Service is defined
+
+    # ----------------------------------------------------
+    # 4e. Setup Crontab for Reboot based on Restart tag
+    # ----------------------------------------------------
+    - name: Configure reboot cron job based on Restart tag
+      block:
+        - name: Parse Restart tag schedule
+          ansible.builtin.set_fact:
+            cron_day: >-
+              {% if 'Sunday' in tags.Restart %}0
+              {% elif 'Saturday' in tags.Restart %}6
+              {% else %}*
+              {% endif %}
+            cron_hour: >-
+              {% if '6:00 am' in tags.Restart %}6
+              {% elif 'midnight' in tags.Restart %}0
+              {% else %}0
+              {% endif %}
+
+        - name: Create crontab entry for system reboot
+          ansible.builtin.cron:
+            name: "Ansible Scheduled Reboot"
+            weekday: "{{ cron_day }}"
+            hour: "{{ cron_hour }}"
+            minute: "0"
+            job: "/sbin/reboot"
+            state: present
+
+      when: tags.Restart is defined
+
+  handlers:
+    # ----------------------------------------------------
+    # Ensure service is started and enabled
+    # ----------------------------------------------------
+    - name: Start and enable service
+      ansible.builtin.service:
+        name: "{{ tags.Service }}"
+        state: started
+        enabled: yes
