@@ -36,3 +36,27 @@ Instead of hardcoding static IP addresses, this project queries the AWS EC2 API 
     │ - Weekly Cron Scheduled │       │ - Weekly Cron Scheduled │
     └─────────────────────────┘       └─────────────────────────┘
 ```
+
+## 🏷️ AWS Tags Schema
+
+Configurations are driven by the following AWS Tags applied to EC2 instances:
+
+| Tag Key   | Description                           | Example Value              |
+| :-------- | :───────────────────────────────────  | :───────────────────────── |
+| `Owner`   | Used by Ansible filter to scope hosts | `Oryan`                    |
+| `Name`    | System hostname to be set             | `oryan-Ansible-nginx`      |
+| `Service` | Service/Package to be installed       | `nginx` or `mysql-server`  |
+| `Restart` | Scheduled reboot timing               | `Saturday at midnight`     |
+
+---
+
+## 📁 Repository Structure
+
+```text
+.
+├── .gitignore               # Excludes SSH keys and sensitive artifacts
+├── ansible.cfg              # Ansible environment settings (Inventory path, SSH config)
+├── aws_ec2.yml              # AWS Dynamic Inventory plugin definition
+├── setup_servers.yml        # Main tag-driven playbook
+└── README.md                # Project documentation
+```
