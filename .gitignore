@@ -1,0 +1,12 @@
+# Private Keys & Credentials
+*.pem
+*.key
+*.pub
+
+# Ansible cache & temporary files
+*.retry
+.ansible/
+__pycache__/
+
+# Environment variables
+.env
