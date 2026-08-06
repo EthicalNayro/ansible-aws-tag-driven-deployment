@@ -36,7 +36,7 @@ Instead of hardcoding static IP addresses, this project queries the AWS EC2 API 
     │ - Weekly Cron Scheduled │       │ - Weekly Cron Scheduled │
     └─────────────────────────┘       └─────────────────────────┘
 ```
-
+```
 ## 🏷️ AWS Tags Schema
 
 Configurations are driven by the following AWS Tags applied to EC2 instances:
@@ -47,7 +47,7 @@ Configurations are driven by the following AWS Tags applied to EC2 instances:
 | `Name`    | System hostname to be set             | `oryan-Ansible-nginx`      |
 | `Service` | Service/Package to be installed       | `nginx` or `mysql-server`  |
 | `Restart` | Scheduled reboot timing               | `Saturday at midnight`     |
-
+```
 ---
 
 ## 📁 Repository Structure
