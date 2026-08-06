@@ -11,7 +11,7 @@ An automated Infrastructure-as-Code (IaC) solution using **Ansible Dynamic Inven
 ## 📐 Architecture & Flow
 
 Instead of hardcoding static IP addresses, this project queries the AWS EC2 API in real-time, filters target instances by `Owner`, and applies system configurations dynamically based on instance metadata:
-
+```
                          ┌──────────────────────┐
                          │ AWS EC2 Instances    │
                          └──────────┬───────────┘
@@ -29,10 +29,10 @@ Instead of hardcoding static IP addresses, this project queries the AWS EC2 API 
            ┌────────────────────────┴────────────────────────┐
            │                                                 │
            ▼                                                 ▼
-┌─────────────────────────┐       ┌─────────────────────────┐
-│ Worker: Nginx Web       │       │ Worker: MySQL DB        │
-│ - Hostname Updated      │       │ - Hostname Updated      │
-│ - Nginx Installed       │       │ - MySQL Installed       │
-│ - Weekly Cron Scheduled │       │ - Weekly Cron Scheduled │
-└─────────────────────────┘       └─────────────────────────┘
+    ┌─────────────────────────┐       ┌─────────────────────────┐
+    │ Worker: Nginx Web       │       │ Worker: MySQL DB        │
+    │ - Hostname Updated      │       │ - Hostname Updated      │
+    │ - Nginx Installed       │       │ - MySQL Installed       │
+    │ - Weekly Cron Scheduled │       │ - Weekly Cron Scheduled │
+    └─────────────────────────┘       └─────────────────────────┘
 ```
